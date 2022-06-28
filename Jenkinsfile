@@ -27,6 +27,13 @@ pipeline {
                 }
             }
         }
+        stage('Sonarqube Analysis'){
+            steps{
+                withSonarQubeEnv('SonarCloud'){
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }	
         stage("Push image") {
             steps {
                 script {
