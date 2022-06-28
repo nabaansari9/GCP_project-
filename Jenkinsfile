@@ -20,6 +20,13 @@ pipeline {
                    sh "mvn clean package"
 	    }
         }
+        stage('Sonarqube Analysis'){
+            steps{
+                withSonarQubeEnv('SonarCloud'){
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
         stage("Build image") {
             steps {
                 script {
@@ -27,13 +34,7 @@ pipeline {
                 }
             }
         }
-        stage('Sonarqube Analysis'){
-            steps{
-                withSonarQubeEnv('SonarCloud'){
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }	
+	
         stage("Push image") {
             steps {
                 script {
